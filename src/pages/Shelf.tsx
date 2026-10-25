@@ -52,7 +52,7 @@ export function Shelf() {
                 <div className="shelf-page-info">
                   <span className="book-cat">Rak baca</span>
                   <h3><Link to={`/kitab/${book.slug}`}>{book.title}</Link></h3>
-                  <p>{book.author} · {book.volumes > 1 ? `${book.volumes} ${t('common.volumes')}` : '1 PDF'} · {numberID(book.readers)} pembaca</p>
+                  <p>{book.author} · {book.volumes > 1 ? `${book.volumes} ${t('common.volumes')}` : '1 PDF'} · {numberID(book.readers)} {t('detail.readers')}</p>
                   <Rating value={book.rating} />
                   <div className="shelf-progress-row">
                     <span className="progress-track large"><i style={{ width: `${progress[book.id] ?? 0}%` }} /></span>

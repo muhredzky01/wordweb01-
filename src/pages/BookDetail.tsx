@@ -144,7 +144,7 @@ export function BookDetail() {
 
             <div className="detail-rating-row">
               <Rating value={book.rating} size={16} />
-              <span className="rating-note">{numberID(book.readers)} {t('detail.readers')} · {allReviews.length} ulasan</span>
+              <span className="rating-note">{numberID(book.readers)} {t('detail.readers')} · {t('detail.reviewsCount').replace('{n}', String(allReviews.length))}</span>
             </div>
 
             <p className="detail-desc">{book.description}</p>
@@ -165,7 +165,7 @@ export function BookDetail() {
               <button type="button" className="btn btn-ghost btn-lg icon-only" onClick={share} aria-label={t('detail.share')}><Share2 size={18} /></button>
             </div>
 
-            <p className="detail-free"><Check size={15} /> Gratis untuk dibaca dan diunduh · {book.volumes > 1 ? `${book.volumes} jilid` : '1 jilid'} PDF</p>
+            <p className="detail-free"><Check size={15} /> {t('detail.freeLine')} · {book.volumes > 1 ? `${book.volumes} ${t('common.volumes')}` : `1 ${t('common.volume')}`} PDF</p>
           </div>
         </div>
 
@@ -230,7 +230,7 @@ export function BookDetail() {
                 <div className="big-score">
                   <strong>{book.rating.toFixed(1)}</strong>
                   <Rating value={book.rating} size={16} />
-                  <span>{allReviews.length} ulasan</span>
+                  <span>{t('detail.reviewsCount').replace('{n}', String(allReviews.length))}</span>
                 </div>
                 <div className="rating-bars">
                   {distribution.map((row) => (

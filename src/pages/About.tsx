@@ -30,7 +30,7 @@ export function About() {
   const submit = (event: React.FormEvent) => {
     event.preventDefault()
     if (!name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || message.trim().length < 10) {
-      toast('Lengkapi nama, email, dan pesan minimal 10 karakter.', 'error')
+      toast(t('about.formError'), 'error')
       return
     }
     setSent(true)

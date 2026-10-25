@@ -45,7 +45,7 @@ export function AuthModal() {
 
   const google = () => {
     login({ name: 'Ahmad Fauzi', email: 'ahmad.fauzi@example.com', joined: new Date().toISOString() })
-    toast('Masuk dengan Google (demo)')
+    toast(t('auth.googleDemo'))
   }
 
   return (

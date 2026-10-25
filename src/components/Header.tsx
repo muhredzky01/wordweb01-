@@ -222,7 +222,7 @@ export function Header() {
         <button type="button" className="nav-search-link" onClick={openSearch}>
           <Search size={14} /> {t('common.search')}
         </button>
-        <span className="nav-note">599 PDF · gratis</span>
+        <span className="nav-note">599 PDF · {t('common.free')}</span>
       </nav>
 
       {mobileOpen && (

@@ -174,7 +174,7 @@ export function Home() {
             {picks.map((book) => <BookCard key={book.id} book={book} />)}
           </div>
           <Link to="/katalog?tab=featured" className="rail-all">
-            {t('common.viewAll')} {featuredBooks.length} pilihan editor <ArrowRight size={15} />
+            {t('common.viewAll')} {featuredBooks.length} {t('home.picks')} <ArrowRight size={15} />
           </Link>
         </div>
       </section>
@@ -219,7 +219,7 @@ export function Home() {
           {tabBooks.map((book) => <BookCard key={book.id} book={book} />)}
         </div>
         <div className="center-action">
-          <Link to="/katalog" className="btn btn-outline">{t('common.viewAll')} {books.length} kitab <ArrowRight size={16} /></Link>
+          <Link to="/katalog" className="btn btn-outline">{t('common.viewAll')} {books.length} {t('common.books')} <ArrowRight size={16} /></Link>
         </div>
       </section>
 
