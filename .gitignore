@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.local
+scripts/out/
+scripts/drive_tree.json
+scripts/kitab_tree.json
+scripts/*.log
