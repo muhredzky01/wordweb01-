@@ -130,7 +130,7 @@ export function Catalog() {
     ...(filters.era !== 'all' ? [{ label: filters.era === 'klasik' ? t('common.classic') : t('common.modern'), onRemove: () => update({ era: 'all' }) }] : []),
     ...(filters.author ? [{ label: filters.author, onRemove: () => update({ author: '' }) }] : []),
     ...(filters.featured ? [{ label: t('catalog.featured'), onRemove: () => update({ featured: false }) }] : []),
-    ...(filters.collection ? [{ label: `Rak: ${filters.collection}`, onRemove: () => update({ collection: '' }) }] : []),
+    ...(filters.collection ? [{ label: t('catalog.chipShelf').replace('{name}', filters.collection), onRemove: () => update({ collection: '' }) }] : []),
   ]
 
   return (
@@ -138,12 +138,12 @@ export function Catalog() {
       <div className="page-head">
         <div className="container">
           <nav className="breadcrumb" aria-label="Breadcrumb">
-            <Link to="/">Beranda</Link><span>/</span><span>Katalog</span>
+            <Link to="/">{t('nav.home')}</Link><span>/</span><span>{t('nav.catalog')}</span>
             {q && <><span>/</span><span className="crumb-current">“{q}”</span></>}
           </nav>
           <div className="page-head-row">
             <div>
-              <h1>{q ? `Hasil pencarian “${q}”` : t('catalog.title')}</h1>
+              <h1>{q ? t('catalog.searchTitle').replace('{q}', q) : t('catalog.title')}</h1>
               <p>{t('catalog.subtitle')}</p>
             </div>
             <div className="page-head-badge">
@@ -158,7 +158,7 @@ export function Catalog() {
         <aside className="catalog-sidebar">
           <div className="catalog-quick-search">
             <Search size={15} />
-            <input value={quickSearch} onChange={(e) => setQuickSearch(e.target.value)} placeholder="Cari dalam hasil…" aria-label="Cari dalam hasil" />
+            <input value={quickSearch} onChange={(e) => setQuickSearch(e.target.value)} placeholder={t('catalog.searchInside')} aria-label="Cari dalam hasil" />
             {quickSearch && <button type="button" onClick={() => setQuickSearch('')} aria-label="Bersihkan"><X size={14} /></button>}
           </div>
           <FilterPanel filters={filters} onChange={update} onReset={reset} />
@@ -186,8 +186,8 @@ export function Catalog() {
                 <ChevronDown size={14} />
               </label>
               <div className="view-toggle">
-                <button type="button" className={view === 'grid' ? 'is-active' : ''} onClick={() => setView('grid')} aria-label="Tampilan grid"><Grid2X2 size={16} /></button>
-                <button type="button" className={view === 'list' ? 'is-active' : ''} onClick={() => setView('list')} aria-label="Tampilan daftar"><List size={17} /></button>
+                <button type="button" className={view === 'grid' ? 'is-active' : ''} onClick={() => setView('grid')} aria-label={t('catalog.gridView')}><Grid2X2 size={16} /></button>
+                <button type="button" className={view === 'list' ? 'is-active' : ''} onClick={() => setView('list')} aria-label={t('catalog.listView')}><List size={17} /></button>
               </div>
             </div>
           </div>

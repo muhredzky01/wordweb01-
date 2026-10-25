@@ -157,6 +157,7 @@ h1, h2, h3, h4 { line-height: 1.2; letter-spacing: -0.02em; font-weight: 800; }
 .pill-soft { background: var(--surface-3); color: var(--muted); }
 .pill-purple { background: var(--primary-soft); color: var(--primary-dark); }
 [data-theme='dark'] .pill-purple { color: #c8c0ff; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .skip-link { position: fixed; top: -60px; left: 20px; z-index: 500; background: var(--primary); color: #fff; padding: 10px 16px; border-radius: 8px; }
 .skip-link:focus { top: 12px; }
 
@@ -1324,3 +1325,6 @@ h1, h2, h3, h4 { line-height: 1.2; letter-spacing: -0.02em; font-weight: 800; }
 main :where(div, section, article, aside, nav, ul, li, form, header),
 .site-header :where(div, nav, form),
 .site-footer :where(div, nav, form) { min-width: 0; }
+
+.filter-options .author-option { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.filter-options .author-option em { font-style: normal; font-size: 9px; color: var(--muted-2); }

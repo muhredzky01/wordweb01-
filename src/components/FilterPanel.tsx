@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ChevronDown, RotateCcw, Search, X } from 'lucide-react'
 import { useApp } from '../context/AppContext'
-import { authors, categories, categoryCounts, languages } from '../data'
+import { authors, categories, categoryCounts, collectionCounts, languages } from '../data'
 import { cx } from '../lib/utils'
 
 export interface Filters {
@@ -23,6 +23,7 @@ interface Props {
 export function FilterPanel({ filters, onChange, onReset, onClose }: Props) {
   const { t } = useApp()
   const [open, setOpen] = useState<Record<string, boolean>>({ category: true, language: true, era: true, author: false, collection: false })
+  const collectionEntries = Object.entries(collectionCounts).sort((a, b) => b[1] - a[1])
   const [authorQuery, setAuthorQuery] = useState('')
 
   const toggleOpen = (key: string) => setOpen((prev) => ({ ...prev, [key]: !prev[key] }))
@@ -41,7 +42,7 @@ export function FilterPanel({ filters, onChange, onReset, onClose }: Props) {
     onChange({ languages: next })
   }
 
-  const filteredAuthors = authors.filter((a) => a.toLowerCase().includes(authorQuery.toLowerCase())).slice(0, 40)
+  const filteredAuthors = authors.filter((a) => a.toLowerCase().includes(authorQuery.toLowerCase()))
 
   return (
     <div className="filter-panel">
@@ -122,7 +123,7 @@ export function FilterPanel({ filters, onChange, onReset, onClose }: Props) {
           <div className="author-filter">
             <div className="mini-search">
               <Search size={14} />
-              <input value={authorQuery} onChange={(e) => setAuthorQuery(e.target.value)} placeholder="Cari penulis…" aria-label="Cari penulis" />
+              <input value={authorQuery} onChange={(e) => setAuthorQuery(e.target.value)} placeholder={t('catalog.searchAuthor')} aria-label={t('catalog.searchAuthor')} />
             </div>
             <div className="author-list">
               <button type="button" className={cx('author-option', !filters.author && 'is-active')} onClick={() => onChange({ author: '' })}>
@@ -139,6 +140,26 @@ export function FilterPanel({ filters, onChange, onReset, onClose }: Props) {
                 </button>
               ))}
             </div>
+          </div>
+        )}
+      </div>
+
+      <div className="filter-block">
+        <button type="button" className="filter-toggle" onClick={() => toggleOpen('collection')} aria-expanded={open.collection}>
+          {t('catalog.shelfOrigin')} <ChevronDown size={16} className={cx(open.collection && 'rotated')} />
+        </button>
+        {open.collection && (
+          <div className="filter-options">
+            {collectionEntries.map(([name, count]) => (
+              <button
+                key={name}
+                type="button"
+                className={cx('author-option', filters.collection === name && 'is-active')}
+                onClick={() => onChange({ collection: filters.collection === name ? '' : name })}
+              >
+                {name} <em>{count}</em>
+              </button>
+            ))}
           </div>
         )}
       </div>

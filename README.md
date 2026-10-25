@@ -51,3 +51,7 @@ python3 scripts/get_covers.py      # download thumbnails -> public/covers
 
 - The PDFs are not re-hosted; every read/download action links to the original Google Drive file.
 - Copyright of each work remains with its author and publisher.
+
+## Deployment
+
+The app is a client-side SPA. A `vercel.json` rewrite and `public/_redirects` file are included so deep links such are served through `index.html` on Vercel and Netlify. For other hosts, configure a SPA fallback to `index.html`.

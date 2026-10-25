@@ -40,7 +40,7 @@ export function Newsletter({ compact = false }: { compact?: boolean }) {
           <button type="submit" className="btn btn-dark">{t('home.newsletterBtn')} <ArrowRight size={15} /></button>
         </form>
       )}
-      {error && <p className="form-error">Masukkan email yang valid.</p>}
+      {error && <p className="form-error">{t('newsletter.invalid')}</p>}
     </div>
   )
 }

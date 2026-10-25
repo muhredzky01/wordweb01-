@@ -16,7 +16,9 @@ export function Reader() {
   const [loading, setLoading] = useState(true)
   const [noteDraft, setNoteDraft] = useState('')
   const [savedFlash, setSavedFlash] = useState(false)
-  const volumeIndex = Math.min(Math.max(0, Number(params.get('v') ?? 0)), Math.max(0, (book?.files.length ?? 1) - 1))
+  const rawVolume = Number(params.get('v') ?? 0)
+  const safeVolume = Number.isFinite(rawVolume) ? rawVolume : 0
+  const volumeIndex = Math.min(Math.max(0, safeVolume), Math.max(0, (book?.files.length ?? 1) - 1))
 
   useEffect(() => {
     if (book) {
@@ -38,8 +40,8 @@ export function Reader() {
   if (!book) {
     return (
       <div className="page container empty-state standalone">
-        <h1>Kitab tidak ditemukan</h1>
-        <Link to="/katalog" className="btn btn-primary">Kembali ke katalog</Link>
+        <h1>{t('reader.notFound')}</h1>
+        <Link to="/katalog" className="btn btn-primary">{t('reader.backCatalog')}</Link>
       </div>
     )
   }
@@ -71,6 +73,7 @@ export function Reader() {
 
   return (
     <div className="reader-page">
+      <h1 className="sr-only">Baca {book.title}</h1>
       <div className="reader-topbar">
         <div className="reader-topbar-inner">
           <Link to={`/kitab/${book.slug}`} className="back-link light"><ArrowLeft size={15} /> {t('reader.back')}</Link>
@@ -105,8 +108,8 @@ export function Reader() {
               onChange={(e) => setProgress(book.id, Number(e.target.value))}
               aria-label={t('reader.progress')}
             />
-            <button type="button" className="btn btn-soft btn-sm btn-block" onClick={() => { setProgress(book.id, 100); toast('Ditandai selesai dibaca.') }}>
-              <Check size={14} /> Tandai selesai
+            <button type="button" className="btn btn-soft btn-sm btn-block" onClick={() => { setProgress(book.id, 100); toast(t('reader.markedDone')) }}>
+              <Check size={14} /> {t('reader.markDone')}
             </button>
           </div>
 
@@ -142,21 +145,21 @@ export function Reader() {
           <div className="reader-toolbar">
             <div className="reader-nav">
               <button type="button" className="btn btn-ghost btn-sm" disabled={volumeIndex === 0} onClick={() => setVolume(volumeIndex - 1)}>
-                <ChevronLeft size={15} /> Sebelumnya
+                <ChevronLeft size={15} /> {t('reader.prev')}
               </button>
-              <span>Jilid {volumeIndex + 1} dari {book.volumes}</span>
+              <span>{t('reader.volumeOf').replace('{n}', String(volumeIndex + 1)).replace('{total}', String(book.volumes))}</span>
               <button type="button" className="btn btn-ghost btn-sm" disabled={volumeIndex === book.files.length - 1} onClick={() => setVolume(volumeIndex + 1)}>
-                Berikutnya <ChevronRight size={15} />
+                {t('reader.next')} <ChevronRight size={15} />
               </button>
             </div>
-            {!user && <span className="reader-note-login">Masuk untuk menyinkronkan catatan</span>}
+            {!user && <span className="reader-note-login">{t('reader.loginNote')}</span>}
           </div>
 
           <div className="reader-frame-wrap" id="reader-frame-wrap">
             {loading && (
               <div className="reader-loading">
                 <Loader2 size={28} className="spin" />
-                <p>Memuat naskah…</p>
+                <p>{t('reader.loading')}</p>
               </div>
             )}
             <iframe
@@ -167,8 +170,8 @@ export function Reader() {
               allow="autoplay"
             />
             <div className="reader-frame-fallback">
-              <span>Pratinjau tidak muncul?</span>
-              <a href={DRIVE_VIEW(volume.id)} target="_blank" rel="noreferrer">Buka naskah di Google Drive <ExternalLink size={12} /></a>
+              <span>{t('reader.previewIssue')}</span>
+              <a href={DRIVE_VIEW(volume.id)} target="_blank" rel="noreferrer">{t('reader.openDrive')} <ExternalLink size={12} /></a>
             </div>
           </div>
         </div>

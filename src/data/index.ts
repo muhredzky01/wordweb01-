@@ -55,12 +55,15 @@ export function searchBooks(query: string, limit?: number) {
       const title = b.title.toLowerCase()
       const author = b.author.toLowerCase()
       const tags = b.tags.join(' ').toLowerCase()
+      const category = categoryMap[b.category].name.toLowerCase()
+      const collection = b.collection.toLowerCase()
       let score = 0
       if (title === q) score = 100
       else if (title.startsWith(q)) score = 70
       else if (title.includes(q)) score = 50
       else if (author.includes(q)) score = 35
       else if (tags.includes(q) || b.description.toLowerCase().includes(q)) score = 15
+      else if (category.includes(q) || collection.includes(q)) score = 12
       return { b, score }
     })
     .filter((x) => x.score > 0)
@@ -74,6 +77,6 @@ export const popularSearches = [
   'Shahih Bukhari',
   'Fikih Syafi’i',
   'Tasawuf',
-  'Nahwu',
+  'Bahasa Arab',
   'Sirah Nabi',
 ]

@@ -8,3 +8,5 @@ scripts/out/
 scripts/drive_tree.json
 scripts/kitab_tree.json
 scripts/*.log
+.browser-libs/
+.apt/

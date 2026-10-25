@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, BookMarked, BookOpen, CheckCircle2, NotebookPen, Trash2 } from 'lucide-react'
 import { useApp } from '../context/AppContext'
@@ -7,6 +8,7 @@ import { Rating } from '../components/Rating'
 import { numberID } from '../lib/utils'
 
 export function Shelf() {
+  useEffect(() => { document.title = 'Rak baca — Maktabah Kitab' }, [])
   const { t, shelf, toggleShelf, progress, notes } = useApp()
   const items = shelf.map(bookById).filter(Boolean)
   const finished = items.filter((b) => b && (progress[b.id] ?? 0) >= 100).length
@@ -16,18 +18,18 @@ export function Shelf() {
     <div className="page">
       <div className="page-head page-head-small">
         <div className="container">
-          <nav className="breadcrumb"><Link to="/">Beranda</Link><span>/</span><span>Rak baca</span></nav>
+          <nav className="breadcrumb"><Link to="/">{t('nav.home')}</Link><span>/</span><span>{t('nav.shelf')}</span></nav>
           <div className="page-head-row">
             <div>
-              <p className="eyebrow"><BookMarked size={15} /> Ruang belajar</p>
+              <p className="eyebrow"><BookMarked size={15} /> {t('shelf.eyebrow')}</p>
               <h1>{t('shelf.title')}</h1>
               <p>{t('shelf.subtitle')}</p>
             </div>
             {items.length > 0 && (
               <div className="shelf-summary">
-                <div><strong>{items.length}</strong><span>disimpan</span></div>
-                <div><strong>{reading}</strong><span>dibaca</span></div>
-                <div><strong>{finished}</strong><span>selesai</span></div>
+                <div><strong>{items.length}</strong><span>{t('shelf.saved')}</span></div>
+                <div><strong>{reading}</strong><span>{t('shelf.reading')}</span></div>
+                <div><strong>{finished}</strong><span>{t('shelf.finished')}</span></div>
               </div>
             )}
           </div>
@@ -40,7 +42,7 @@ export function Shelf() {
             <span className="empty-icon"><BookMarked size={28} /></span>
             <h2>{t('shelf.empty')}</h2>
             <p>{t('shelf.emptyHint')}</p>
-            <Link to="/katalog" className="btn btn-primary">Mulai jelajahi</Link>
+            <Link to="/katalog" className="btn btn-primary">{t('shelf.start')}</Link>
           </div>
         ) : (
           <div className="shelf-page-list">
@@ -62,10 +64,10 @@ export function Shelf() {
                   <Link to={`/baca/${book.slug}`} className="btn btn-primary btn-sm">
                     {(progress[book.id] ?? 0) > 0 ? t('shelf.continue') : t('common.readNow')} <ArrowRight size={14} />
                   </Link>
-                  <Link to={`/kitab/${book.slug}`} className="btn btn-ghost btn-sm"><BookOpen size={14} /> Detail</Link>
+                  <Link to={`/kitab/${book.slug}`} className="btn btn-ghost btn-sm"><BookOpen size={14} /> {t('common.detail')}</Link>
                   <button type="button" className="btn btn-ghost btn-sm danger-text" onClick={() => toggleShelf(book.id)}><Trash2 size={14} /> {t('common.remove')}</button>
                 </div>
-                {(progress[book.id] ?? 0) >= 100 && <span className="finished-badge"><CheckCircle2 size={13} /> Selesai</span>}
+                {(progress[book.id] ?? 0) >= 100 && <span className="finished-badge"><CheckCircle2 size={13} /> {t('shelf.finishedBadge')}</span>}
               </article>
             ))}
           </div>

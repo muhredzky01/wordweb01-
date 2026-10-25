@@ -56,9 +56,9 @@ export function BookDetail() {
   if (!book) {
     return (
       <div className="page container empty-state standalone">
-        <h1>Kitab tidak ditemukan</h1>
-        <p>Kitab yang Anda cari mungkin sudah dipindahkan.</p>
-        <Link to="/katalog" className="btn btn-primary">Kembali ke katalog</Link>
+        <h1>{t('detail.notFound')}</h1>
+        <p>{t('detail.notFoundHint')}</p>
+        <Link to="/katalog" className="btn btn-primary">{t('detail.backCatalog')}</Link>
       </div>
     )
   }
@@ -110,7 +110,7 @@ export function BookDetail() {
       <div className="container">
         <button type="button" className="back-link" onClick={() => navigate(-1)}><ArrowLeft size={15} /> {t('common.back')}</button>
         <nav className="breadcrumb" aria-label="Breadcrumb">
-          <Link to="/">Beranda</Link><span>/</span><Link to="/katalog">Katalog</Link><span>/</span>
+          <Link to="/">{t('nav.home')}</Link><span>/</span><Link to="/katalog">{t('nav.catalog')}</Link><span>/</span>
           <Link to={`/katalog?category=${book.category}`}>{category.name}</Link><span>/</span>
           <span className="crumb-current">{book.title}</span>
         </nav>
@@ -135,7 +135,7 @@ export function BookDetail() {
             <div className="detail-eyebrow">
               <span className="cat-badge" style={{ background: category.light, color: category.color }}>{category.name}</span>
               <span className="pill pill-soft">{book.era === 'klasik' ? t('common.classic') : t('common.modern')}</span>
-              {book.featured && <span className="pill pill-purple">Pilihan editor</span>}
+              {book.featured && <span className="pill pill-purple">{t('catalog.featured')}</span>}
             </div>
             <h1>{book.title}</h1>
             {book.arabic && <p className="detail-arabic" dir="rtl">{book.arabic}</p>}
@@ -152,8 +152,8 @@ export function BookDetail() {
             <div className="detail-facts">
               <div><span>{t('common.language')}</span><strong>{book.language}</strong></div>
               <div><span>{t('common.category')}</span><strong>{category.name}</strong></div>
-              <div><span>{t('common.format')}</span><strong>PDF · {book.volumes > 1 ? `${book.volumes} ${t('common.volumes')}` : '1 file'}</strong></div>
-              <div><span>Sumber</span><strong>Google Drive</strong></div>
+              <div><span>{t('common.format')}</span><strong>PDF · {book.volumes > 1 ? `${book.volumes} ${t('common.volumes')}` : `1 ${t('detail.files')}`}</strong></div>
+              <div><span>{t('common.source')}</span><strong>Google Drive</strong></div>
             </div>
 
             <div className="detail-actions">
@@ -179,9 +179,9 @@ export function BookDetail() {
           {tab === 'about' && (
             <div className="detail-tab-body about-grid">
               <div className="prose">
-                <h3>Tentang kitab ini</h3>
+                <h3>{t('detail.about')}</h3>
                 <p>{book.description}</p>
-                <p>Koleksi ini dirawat dari rak “{book.collection}” di perpustakaan sumber. Berkas PDF dapat dibaca langsung di ruang baca Maktabah atau diunduh untuk kajian luring.</p>
+                <p>{t('detail.prose2').replace('{shelf}', book.collection)}</p>
                 <blockquote><Quote size={16} /> {t('detail.sourceText')}</blockquote>
                 <h3>{t('detail.tags')}</h3>
                 <div className="tag-row">
@@ -197,7 +197,7 @@ export function BookDetail() {
                   <div><dt>{t('common.language')}</dt><dd>{book.language}</dd></div>
                   <div><dt>{t('common.volume')}</dt><dd>{book.volumes} jilid</dd></div>
                   <div><dt>{t('common.era')}</dt><dd>{book.era === 'klasik' ? t('common.classic') : t('common.modern')}</dd></div>
-                  <div><dt>Rak asal</dt><dd>{book.collection}</dd></div>
+                  <div><dt>{t('common.shelfOrigin')}</dt><dd>{book.collection}</dd></div>
                   <div><dt>ID</dt><dd className="mono">{book.id.toUpperCase()}</dd></div>
                 </dl>
                 <a href={DRIVE_VIEW(book.driveId)} target="_blank" rel="noreferrer" className="text-link">{t('reader.openDrive')} <ExternalLink size={13} /></a>

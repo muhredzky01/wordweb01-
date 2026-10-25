@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   ArrowRight, BookOpen, BookmarkCheck, ChevronLeft, ChevronRight, Download,
@@ -16,6 +16,7 @@ import { numberID } from '../lib/utils'
 type Tab = 'new' | 'popular' | 'all'
 
 export function Home() {
+  useEffect(() => { document.title = 'Maktabah Kitab — Perpustakaan Kitab Digital' }, [])
   const { t, user, openAuth, openShelf, shelf } = useApp()
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
@@ -104,15 +105,15 @@ export function Home() {
             </div>
             <div className="floating-card float-top">
               <span className="float-icon green"><Download size={17} /></span>
-              <div><strong>{totalVolumes} jilid PDF</strong><small>siap diunduh gratis</small></div>
+              <div><strong>{totalVolumes} jilid PDF</strong><small>{t('home.floatDownload')}</small></div>
             </div>
             <div className="floating-card float-bottom">
               <span className="float-icon amber"><Star size={17} fill="currentColor" /></span>
-              <div><strong>4.8 / 5</strong><small>dari 12.480 pembaca</small></div>
+              <div><strong>4.8 / 5</strong><small>{t('home.floatReaders')}</small></div>
             </div>
             <div className="floating-arabic">
               <span>العلم نور</span>
-              <small>ilmu adalah cahaya</small>
+              <small>{t('home.floatLight')}</small>
             </div>
           </div>
         </div>
@@ -120,10 +121,10 @@ export function Home() {
 
       <section className="trust-strip">
         <div className="container trust-grid">
-          <div><span className="trust-icon"><BookOpen size={19} /></span><div><strong>Akses tanpa batas</strong><small>Baca langsung di peramban, tanpa aplikasi.</small></div></div>
-          <div><span className="trust-icon"><ShieldCheck size={19} /></span><div><strong>Bebas biaya & iklan</strong><small>Untuk belajar, mengajar, dan mengaji.</small></div></div>
-          <div><span className="trust-icon"><Download size={19} /></span><div><strong>Unduh untuk luring</strong><small>Simpan PDF dan bawa ke mana saja.</small></div></div>
-          <div><span className="trust-icon"><BookmarkCheck size={19} /></span><div><strong>Rak pribadi</strong><small>Simpan favorit dan lanjutkan bacaan.</small></div></div>
+          <div><span className="trust-icon"><BookOpen size={19} /></span><div><strong>{t('home.trust1Title')}</strong><small>{t('home.trust1Text')}</small></div></div>
+          <div><span className="trust-icon"><ShieldCheck size={19} /></span><div><strong>{t('home.trust2Title')}</strong><small>{t('home.trust2Text')}</small></div></div>
+          <div><span className="trust-icon"><Download size={19} /></span><div><strong>{t('home.trust3Title')}</strong><small>{t('home.trust3Text')}</small></div></div>
+          <div><span className="trust-icon"><BookmarkCheck size={19} /></span><div><strong>{t('home.trust4Title')}</strong><small>{t('home.trust4Text')}</small></div></div>
         </div>
       </section>
 
@@ -202,7 +203,7 @@ export function Home() {
       <section className="section container">
         <Reveal className="section-head section-head-tabs">
           <div>
-            <p className="eyebrow"><LibraryBig size={15} /> Katalog</p>
+            <p className="eyebrow"><LibraryBig size={15} /> {t('nav.catalog')}</p>
             <h2>{t('home.newest')}</h2>
             <p className="section-sub">{t('home.newestSub')}</p>
           </div>
@@ -237,7 +238,7 @@ export function Home() {
                 <Link to={`/katalog?collection=${encodeURIComponent(name)}`} className="collection-card">
                   <span className="collection-count">{count} PDF</span>
                   <strong lang="ar" dir="rtl">{name}</strong>
-                  <span className="collection-link">Jelajahi <ArrowRight size={14} /></span>
+                  <span className="collection-link">{t('common.explore')} <ArrowRight size={14} /></span>
                 </Link>
               </Reveal>
             ))}
@@ -255,8 +256,8 @@ export function Home() {
           </Reveal>
           <Reveal className="reader-card" delay={80}>
             <div className="reader-card-head">
-              <span className="eyebrow light"><Star size={14} /> Paling banyak dibaca</span>
-              <Link to="/katalog?sort=popular">Lihat semua <ArrowRight size={14} /></Link>
+              <span className="eyebrow light"><Star size={14} /> {t('home.topReaders')}</span>
+              <Link to="/katalog?sort=popular">{t('common.viewAll')} <ArrowRight size={14} /></Link>
             </div>
             <ol className="reader-list">
               {topReaders.slice(0, 4).map((book, index) => (
@@ -278,16 +279,16 @@ export function Home() {
         <Reveal className="community-banner">
           <div>
             <p className="eyebrow light"><BookOpen size={15} /> Ruang baca pribadi</p>
-            <h2>{user ? `Selamat membaca, ${user.name.split(' ')[0]}.` : 'Buat rak baca Anda sendiri.'}</h2>
-            <p>Simpan kitab favorit, tandai progres bacaan, dan tulis catatan — semuanya tersimpan di perangkat Anda.</p>
+            <h2>{user ? t('home.personalWelcome').replace('{name}', user.name.split(' ')[0]) : t('home.personalTitle')}</h2>
+            <p>{t('home.personalText')}</p>
           </div>
           <div className="community-actions">
             {user ? (
               <button type="button" className="btn btn-light btn-lg" onClick={openShelf}><BookmarkCheck size={17} /> {t('shelf.open')} ({shelf.length})</button>
             ) : (
               <>
-                <button type="button" className="btn btn-light btn-lg" onClick={openAuth}>Mulai gratis <ArrowRight size={17} /></button>
-                <Link to="/katalog" className="btn btn-ghost-light btn-lg">Jelajahi katalog</Link>
+                <button type="button" className="btn btn-light btn-lg" onClick={openAuth}>{t('home.startFree')} <ArrowRight size={17} /></button>
+                <Link to="/katalog" className="btn btn-ghost-light btn-lg">{t('home.exploreCatalog')}</Link>
               </>
             )}
           </div>

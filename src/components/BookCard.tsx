@@ -25,7 +25,7 @@ export function BookCard({ book, layout = 'grid' }: Props) {
           <BookCover book={book} />
         </Link>
         <span className={cx('cover-badge', book.featured ? 'badge-featured' : book.volumes > 1 ? 'badge-volumes' : 'badge-pdf')}>
-          {book.featured ? t('catalog.featured') : book.volumes > 1 ? `${book.volumes} ${t('common.volumes')}` : 'PDF'}
+          {book.featured ? t('catalog.pick') : book.volumes > 1 ? `${book.volumes} ${t('common.volumes')}` : 'PDF'}
         </span>
         <button
           type="button"

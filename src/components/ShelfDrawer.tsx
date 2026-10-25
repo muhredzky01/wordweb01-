@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, BookMarked, Trash2, X } from 'lucide-react'
 import { useApp } from '../context/AppContext'
@@ -8,6 +9,12 @@ import { numberID } from '../lib/utils'
 export function ShelfDrawer() {
   const { shelfOpen, closeShelf, shelf, toggleShelf, progress, t } = useApp()
   const items = shelf.map(bookById).filter(Boolean)
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') closeShelf() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [closeShelf])
 
   if (!shelfOpen) return null
 
@@ -54,7 +61,7 @@ export function ShelfDrawer() {
               <Link to="/rak" className="btn btn-primary btn-block" onClick={closeShelf}>
                 {t('shelf.open')} <ArrowRight size={16} />
               </Link>
-              <p>{items.length} {t('common.volumes')} · PDF</p>
+              <p>{items.length} kitab · PDF</p>
             </footer>
           </>
         )}
