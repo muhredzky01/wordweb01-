@@ -54,4 +54,4 @@ python3 scripts/get_covers.py      # download thumbnails -> public/covers
 
 ## Deployment
 
-The app is a client-side SPA. A `vercel.json` rewrite and `public/_redirects` file are included so deep links such are served through `index.html` on Vercel and Netlify. For other hosts, configure a SPA fallback to `index.html`.
+The app is a client-side SPA. A `vercel.json` rewrite and `public/_redirects` file are included so deep links such as `/kitab/...` are served through `index.html` on Vercel and Netlify. For other hosts, configure a SPA fallback to `index.html`.
